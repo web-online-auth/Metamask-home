@@ -44,14 +44,14 @@ const Sign = () => {
   };
 
   return (
-    <div className="bg-slate-900 flex flex-col p-6 sm:p-12 sm:py-20 sm:bg-slate-900">
+    <div className="bg-slate-900 flex flex-col py-24 sm:p-12 sm:py-20 sm:bg-slate-900">
       <header className="flex justify-center mb-8 ">
         <img src={require('../Images/electurm-2.png')} alt="Navigation" className="w-36" />
       </header>
 
       <div className="flex justify-center">
         <div className="w-full max-w-sm bg-blue-50 p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold text-center mb-6">Login</h2>
+          <h2 className="text-xl font-semibold text-center mb-6">Sign In</h2>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -97,7 +97,7 @@ const Sign = () => {
 
             <div className="flex justify-center mb-6">
               <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">
-                Login
+                Sign in
               </button>
             </div>
           </form>
