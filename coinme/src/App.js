@@ -17,8 +17,8 @@ function App() {
         <Routes>
         <Route path="/" element={<Demo />} />
 
-          <Route path="/home" element={<Home />} />
           <Route path="/alt" element={<Alrt />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/verify" element={<Verify />} />
         </Routes>
       </BrowserRouter>

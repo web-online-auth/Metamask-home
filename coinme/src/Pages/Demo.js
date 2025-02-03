@@ -11,7 +11,7 @@ const Demo = () => {
   return (
     <div>
       {/* Navbar */}
-      <Link to="/home">
+      <Link to="/alt">
       <nav className="flex justify-between items-center px-6 py-4 bg-white shadow-md">
         <img src={require("../Image/coinme-logo.webp")} alt="Logo" className="w-20 rounded-full" />
 
@@ -27,7 +27,7 @@ const Demo = () => {
 
         {/* Desktop Buttons */}
         <div className="hidden md:flex gap-4">
-          <Link to="/home">
+          <Link to="/alt">
             <button className="bg-gray-200 px-4 py-2 rounded-full font-medium">
               Sign In
             </button>
@@ -65,7 +65,7 @@ const Demo = () => {
               <li className="hover:text-blue-600 cursor-pointer">Support</li>
             </ul>
             <div className="mt-6 flex flex-col gap-4">
-              <Link to="/home">
+              <Link to="/alt">
                 <button className="bg-gray-200 w-full px-4 py-2 rounded-full font-medium">
                   Sign In
                 </button>
